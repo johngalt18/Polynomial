@@ -8,7 +8,7 @@ using namespace std;
 class Polynomial{
 
 private:
-	vector <double> coefs; // вектор для хранения коэффициентов полинома
+	vector <double> coefs; // указатель на массив коэффициентов
 	int degree; // степень полинома
 public:
 	Polynomial(); // конструктор по умолчанию
@@ -36,18 +36,17 @@ public:
 
 Polynomial::Polynomial() 
    { 
+      // тривиальный полином
       setlocale(LC_ALL, "Russian"); // русский язык
-      cout << "Степень полинома: "; cin >> degree; // ввод степени
-      coefs.reserve(degree+1); // выделение памяти под коэффициенты 
-      cout << "Коэффициенты полинома: ";
-      for (int i = 0; i < degree+1; i++)
-         cin >> coefs[i];
+      degree = 1;
+      coefs.reserve(1); // выделить место в памяти для массива
+      coefs[0]=0;
    }
    
 Polynomial::Polynomial(int deg) 
    {   
-      degree = deg;
-      coefs.reserve(degree+1);
+      degree = deg; // степень
+      coefs.reserve(degree+1); // выделить место в памяти для массива
       for (int i = 0; i < degree+1; i++)
          coefs[i] = 1; // коэффициенты = 1
    }
@@ -55,8 +54,8 @@ Polynomial::Polynomial(int deg)
 
 Polynomial::Polynomial(int deg, vector <double> vec) 
    { 
-      degree = deg;
-      coefs.reserve(degree+1);
+      degree = deg; // степень
+      coefs.reserve(degree+1); // выделить место в памяти для массива
       for (int i = 0; i < degree+1; i++)
          coefs[i] = vec[i];
    }
@@ -67,7 +66,7 @@ Polynomial::~Polynomial()
    
 void Polynomial::input() 
    { 
-      cout << "Ввод коэффициентов полинома степени " << degree << ": ";
+      cout << "Вводим коэффициенты полинома степени " << degree << ": ";
       for (int i = 0; i < degree + 1; i++)
          cin >> coefs[i];
    }
@@ -80,9 +79,16 @@ int Polynomial::get_degree()
 void Polynomial::output()
    {
       cout << "Полином: ";
-      for (int i = 0; i < degree-1; i++)
-         cout << coefs[i] << "*x^" << degree - i << "+";
-      cout << coefs[degree - 1] << "*x+" << coefs[degree] << endl;
+      if (degree == 1)
+      {
+         cout << 0;
+      }
+      else
+      {
+         for (int i = 0; i < degree-1; i++)
+            cout << coefs[i] << "*x^" << degree - i << "+";
+         cout << coefs[degree - 1] << "*x+" << coefs[degree] << endl;
+      }
    } 
 
 Polynomial & Polynomial::operator= (const Polynomial& p) 
@@ -106,7 +112,7 @@ Polynomial operator* (const Polynomial& p, int mn)
 Polynomial operator* (const Polynomial& p1, const Polynomial& p2)
    { 
       int deg = p1.degree + p2.degree;
-      vector <double> vec(deg + 1);
+      vector <double> vec(deg + 1); // динамический массив размера
       for (int i = 0; i < p1.degree + 1; i++)
          for (int j = 0; j < p2.degree + 1; j++)
             vec[i+j] += p1.coefs[i] * p2.coefs[j]; // умножаем на полином
@@ -167,5 +173,3 @@ double Polynomial::discriminant()
          d *= pow(this->coefs[i] - this->coefs[j], 2);
    return d;
    }
-
-
