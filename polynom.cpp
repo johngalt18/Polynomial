@@ -24,6 +24,8 @@ int main()
    Polynomial p6(2);
    p6 = p5.antiderivative();
    cout << "Интеграл: " << endl;
+   vector <double> s1({2, 5, 7});
+   p6 = s1;
    p6.output();
    // cout << "Дискриминант полинома 2: " << p2.discriminant() << endl;
 };

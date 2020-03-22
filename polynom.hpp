@@ -22,7 +22,8 @@ public:
 	void input(); // заполнение полинома
 	void output(); // вывод полинома
 
-	Polynomial & operator= (const Polynomial & p); // присваивание	
+	Polynomial & operator= (const Polynomial & p); // присваиваниe
+        Polynomial & operator= (vector <double> vec);
 	friend Polynomial operator* (const Polynomial&, int); // умножение полинома на число
 	friend Polynomial operator* (const Polynomial&, const Polynomial&); // умножение полинома на полином
 	friend Polynomial operator^ (const Polynomial&, int); // возведение в степень
@@ -61,9 +62,9 @@ Polynomial::Polynomial(int deg, vector <double> vec)
    }
 
 Polynomial::~Polynomial() 
-   { 
+   {
    }
-   
+
 void Polynomial::input() 
    { 
       cout << "Вводим коэффициенты полинома степени " << degree << ": ";
@@ -99,6 +100,14 @@ Polynomial & Polynomial::operator= (const Polynomial& p)
          coefs[i] = p.coefs[i];
       return *this;
    }
+Polynomial & Polynomial::operator= (vector <double> vec)
+    {
+        degree = vec.size() - 1;
+        coefs.resize(degree+1);
+        for (int i = 0; i < degree+1; ++i)
+            coefs[i] = vec[i];
+        return *this;
+    }
 
 Polynomial operator* (const Polynomial& p, int mn)
    { 
