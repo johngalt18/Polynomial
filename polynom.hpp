@@ -8,7 +8,7 @@ using namespace std;
 class Polynomial{
 
 private:
-	vector <double> coefs; // указатель на массив коэффициентов
+	vector <double> coefs; // массив коэффициентов
 	int degree; // степень полинома
 public:
 	Polynomial(); // конструктор по умолчанию
@@ -23,7 +23,7 @@ public:
 	void output(); // вывод полинома
 
 	Polynomial & operator= (const Polynomial & p); // присваиваниe
-        Polynomial & operator= (vector <double> vec);
+        Polynomial & operator= (vector <double> vec); // присваивание для вектора
 	friend Polynomial operator* (const Polynomial&, int); // умножение полинома на число
 	friend Polynomial operator* (const Polynomial&, const Polynomial&); // умножение полинома на полином
 	friend Polynomial operator^ (const Polynomial&, int); // возведение в степень
@@ -39,15 +39,15 @@ Polynomial::Polynomial()
    { 
       // тривиальный полином
       setlocale(LC_ALL, "Russian"); // русский язык
-      degree = 1;
-      coefs.reserve(1); // выделить место в памяти для массива
+      degree = 1; 
+      coefs.reserve(1); // выделить место в памяти под 1 элемент
       coefs[0]=0;
    }
    
 Polynomial::Polynomial(int deg) 
    {   
-      degree = deg; // степень
-      coefs.reserve(degree+1); // выделить место в памяти для массива
+      degree = deg; 
+      coefs.reserve(degree+1);
       for (int i = 0; i < degree+1; i++)
          coefs[i] = 1; // коэффициенты = 1
    }
@@ -55,8 +55,8 @@ Polynomial::Polynomial(int deg)
 
 Polynomial::Polynomial(int deg, vector <double> vec) 
    { 
-      degree = deg; // степень
-      coefs.reserve(degree+1); // выделить место в памяти для массива
+      degree = deg;
+      coefs.reserve(degree+1);
       for (int i = 0; i < degree+1; i++)
          coefs[i] = vec[i];
    }
@@ -113,7 +113,7 @@ Polynomial operator* (const Polynomial& p, int mn)
    { 
       vector <double> vec;
       for (int i = 0; i < p.degree+1; i++)
-         vec[i] = p.coefs[i] * mn; // умножаем на число
+         vec[i] = p.coefs[i] * mn;
       Polynomial pm(p.degree, vec);
       return pm;
    }
@@ -121,7 +121,7 @@ Polynomial operator* (const Polynomial& p, int mn)
 Polynomial operator* (const Polynomial& p1, const Polynomial& p2)
    { 
       int deg = p1.degree + p2.degree;
-      vector <double> vec(deg + 1); // динамический массив размера
+      vector <double> vec(deg + 1);
       for (int i = 0; i < p1.degree + 1; i++)
          for (int j = 0; j < p2.degree + 1; j++)
             vec[i+j] += p1.coefs[i] * p2.coefs[j]; // умножаем на полином
