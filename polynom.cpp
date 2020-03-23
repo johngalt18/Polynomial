@@ -1,9 +1,23 @@
-#include "polynom.hpp"
+ude "polynom.hpp"
 #include <iostream>
+#include <iterator>
+#include <fstream>
+#include <vector>
+#include <algorithm> 
+
 using namespace std;
 
 int main()
 {
+   ifstream is("coefs.txt");
+   istream_iterator<double> start(is), end;
+   vector<double> numbers(start, end);
+   cout << "Read " << numbers.size() << " numbers" << std::endl;
+
+   cout << "numbers read in:\n";
+   copy(numbers.begin(), numbers.end(), ostream_iterator<double>(cout, " "));
+   cout << endl;
+   
    setlocale(LC_ALL, "Russian"); // русский язык
    Polynomial p1(3, {14, 4, 8, 5}); 
    p1.output();
