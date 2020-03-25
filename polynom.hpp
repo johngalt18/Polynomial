@@ -102,7 +102,7 @@ Polynomial & Polynomial::operator= (const Polynomial& p)
    }
 Polynomial & Polynomial::operator= (vector <double> vec)
     {
-        degree = vec.size() - 1;
+        degree = vec.size()-1;
         coefs.resize(degree+1);
         for (int i = 0; i < degree+1; ++i)
             coefs[i] = vec[i];
